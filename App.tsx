@@ -1,13 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Appbar } from 'react-native-paper';
+import Flex from './Flex/flex';
 
 export default function App() {
+  console.disableYellowBox = true;
   return (
+    <>
+    <Appbar style={{marginTop:35}}>
+      <Text 
+        style={{fontSize:24,fontWeight:"bold",textAlign:"center"}}
+        >
+        Crackpin
+        </Text>
+    </Appbar>
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Flex/>
       <StatusBar style="auto" />
     </View>
+    </>
   );
 }
 
