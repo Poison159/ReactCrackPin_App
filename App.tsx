@@ -2,17 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import Flex from './Flex/flex';
+import Flex from './Flex/Flex';
 
 export default function App() {
-  console.disableYellowBox = true;
   return (
     <>
     <Appbar style={{marginTop:35}}>
-      <Text 
-        style={{fontSize:24,fontWeight:"bold",textAlign:"center"}}
+        <Text 
+          style={{fontSize:24,fontWeight:"bold",textAlign:"center"}}
         >
-        Crackpin
+          Crackpin
         </Text>
     </Appbar>
     <View style={styles.container}>

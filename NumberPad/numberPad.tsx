@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 export interface NumberPadProps{
-    clickMethod(arg:number) : () => void;
+    clickMethod(arg:number) : void;
     removeOne: () => void;
     removeAll: () => void;
     guess:any[];
@@ -17,90 +17,90 @@ const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,remove
 
 
   return (
-    <>
-    <View style={[styles.container, {
-      // Try setting `flexDirection` to `"row"`.
-      flexDirection: "row"
-    }]}>
+    <View style={{ flex: 4}}>
+      <View style={[styles.container, {
+        // Try setting `flexDirection` to `"row"`.
+        flexDirection: "row"
+      }]}>
+          {
+              firstNumbers.map( number => (
+                  
+                  <Button
+                      onPress={() =>clickMethod(number)}
+                      key={number}
+                      style={{ flex: 2}} 
+                  >
+                  {number}
+                  </Button>
+                
+              ))
+          }
+      </View>
+      
+      <View style={[styles.container, {
+        // Try setting `flexDirection` to `"row"`.
+        flexDirection: "row"
+      }]}>
         {
-            firstNumbers.map( number => (
+              secondNumbers.map( number => (
+                  
+                  <Button
+                      onPress={() =>clickMethod(number)}
+                      key={number}
+                      style={{ flex: 2}} 
+                  >
+                  {number}
+                  </Button>
                 
-                <Button
-                    onPress={() =>clickMethod(number)}
-                    key={number}
-                    style={{ flex: 2}} 
-                >
-                {number}
-                </Button>
-               
-            ))
-        }
-    </View>
-    
-    <View style={[styles.container, {
-      // Try setting `flexDirection` to `"row"`.
-      flexDirection: "row"
-    }]}>
-      {
-            secondNumbers.map( number => (
+              ))
+          }
+      </View>
+
+      <View style={[styles.container, {
+        flexDirection: "row"
+      }]}>
+          {
+              thirdNumbers.map( number => (
+                  
+                  <Button
+                      onPress={() =>clickMethod(number)}
+                      key={number}
+                      style={{ flex: 2}} 
+                  >
+                  {number}
+                  </Button>
                 
-                <Button
-                    onPress={() =>clickMethod(number)}
-                    key={number}
-                    style={{ flex: 2}} 
-                >
-                {number}
-                </Button>
-               
-            ))
-        }
-    </View>
+              ))
+          }
+      </View>
 
-    <View style={[styles.container, {
-      flexDirection: "row"
-    }]}>
-        {
-            thirdNumbers.map( number => (
-                
-                <Button
-                    onPress={() =>clickMethod(number)}
-                    key={number}
-                    style={{ flex: 2}} 
-                >
-                {number}
-                </Button>
-               
-            ))
-        }
-    </View>
+      <View style={[styles.container, {
+        // Try setting `flexDirection` to `"row"`.
+        flexDirection: "row"
+      }]}>
+          
+          <Button
+              onPress={() => {removeAll()}}
+              style={{ flex: 4}} 
+          >
+          clear all
+          </Button>
+          <Button
+              onPress={() =>clickMethod(0)}
+              style={{ flex: 2}} 
+          >
+          {0}
+          </Button>
+          <Button
+              onPress={() => {removeOne()}}
+              style={{ flex: 4}} 
+          >
+          erase
+          </Button>
+          
+      </View>
 
-    <View style={[styles.container, {
-      // Try setting `flexDirection` to `"row"`.
-      flexDirection: "row"
-    }]}>
-        
-                <Button
-                    onPress={() => {removeAll()}}
-                    style={{ flex: 2}} 
-                >
-                clear all
-                </Button>
-                <Button
-                    onPress={() =>clickMethod(0)}
-                    style={{ flex: 2}} 
-                >
-                {0}
-                </Button>
-                <Button
-                    onPress={() => {removeOne()}}
-                    style={{ flex: 2}} 
-                >
-                erase
-                </Button>
-         
     </View>
-
-    </>
   );
 };
 
