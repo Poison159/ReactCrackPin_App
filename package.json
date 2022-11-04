@@ -8,8 +8,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "expo": "~42.0.1",
+    "expo-cli": "^6.0.6",
     "expo-status-bar": "~1.0.4",
+    "mobx": "^6.6.2",
+    "mobx-react": "^7.5.3",
+    "mobx-react-lite": "^3.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",

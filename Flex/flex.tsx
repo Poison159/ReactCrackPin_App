@@ -5,32 +5,8 @@ import FloatingActionButton from "./FloatingActionButton";
 import GameStatus from "./GameStatus";
 import GuessAndTime from "./GuessAndTime";
 import SnackSecation from "./SnackSections";
+import {hasWon,getRandomPin,CheckGuess} from "../helper/helper"
 
-const samePosition = (numb:number, pin:number[], pos:number) => {
-  const index = pin.findIndex((item)=> item === numb);
-  return pos === index ? true : false;
-}
-
-const hasWon = (tempArray: any[]) => {
-  let winner = true;
-  for(let i = 0; i < tempArray.length; i++){
-    if(tempArray[i].color !== 'green')
-      winner = false
-  }
-  return winner;
-}
-
-const getRandomPin = () =>{
-  let pin = [];
-  let arr = [0,1,2,3,4,5,6,7,8,9];
-
-  for(let i = 0; i < 4; i++){
-    const rndInt = arr[Math.floor(Math.random() * arr.length)];
-    pin.push(rndInt);
-    arr.splice(arr.indexOf(rndInt), 1);
-  }
-  return pin;
-}
 
 const Flex = () => {
   const [visible, setVisible]           = React.useState(false);
@@ -44,35 +20,9 @@ const Flex = () => {
   const onDismissSnackBar               = () => setVisible(false);
   const [snackMsg,setSnackMsg]          = useState<string>("");
 
-  const evaluateNumber = (guessNumber:number, pin: number[],pos:number) => {
-    if(!pin.includes(guessNumber)){
-      return { number:guessNumber,color: 'red'};
-    }else{
-      if(samePosition(guessNumber,pin,pos)){
-        return { number:guessNumber,color: 'green'};
-      }else{
-        return { number:guessNumber,color: 'orange'};
-      }
-    }
-  }
-
-  const CheckGuess = () => {
-    let temp = [];
-    let seen : any[] = [];
-
-    for(let i = 0; i < guess.length; i++){
-      if(seen.includes(guess[i]))
-         temp.push({ number:guess[i],color: 'red'});
-      else{
-        seen.push(guess[i]);
-        let maping = evaluateNumber(guess[i],pin,i);
-        temp.push(maping);
-      }
-    }
-    return temp;
-  }
 
   useEffect(() => {
+
     if(pin.length === 0)
       setPin(getRandomPin());
     if(secondsLeft === 10){
@@ -83,40 +33,40 @@ const Flex = () => {
       onToggleSnackBar();
       setSnackMsg("you could not carck the code in time");
     }
-    if(won){
+    if(won)
       setSecondsLeft(0);
-    }
 
-    if(secondsLeft > 0){
-      const timerId = setTimeout(() => {
-        if(guess.length === 4){
-          let temp = CheckGuess();
-          if(hasWon(temp)){
-            onToggleSnackBar();
-            setSnackMsg("you are a genius, you cracked the code");
-            setTimeToSpare(secondsLeft);
-            setWon(true);
-          }else{
-            setAttempts([temp,...attempts]);
-            setGuess([]);
+      if(secondsLeft > 0){
+        const timerId = setTimeout(() => {
+          if(guess.length === 4){
+            let temp = CheckGuess(guess,pin);
+            if(hasWon(temp)){
+              onToggleSnackBar();
+              setSnackMsg("you are a genius, you cracked the code");
+              setTimeToSpare(secondsLeft);
+              setWon(true);
+            }else{
+              setAttempts([temp,...attempts]);
+              setGuess([]);
+            }
           }
-        }
-        setSecondsLeft(secondsLeft - 1);
-      },1000)
-      return() => clearTimeout(timerId);
-    }
+          setSecondsLeft(secondsLeft - 1);
+        },1000)
+        return() => clearTimeout(timerId);
+      }
   },[secondsLeft]);
+
 
   const  addNumber = (numb:number)  =>{
     if(guess.length < 4)
       setGuess([...guess, numb]);
   }
 
-  function removeOne(){
+  const removeOne = () =>{
     guess.pop();
   }
 
-  function removeAll(){
+  const removeAll = () =>{
     setGuess([]);
   }
 
