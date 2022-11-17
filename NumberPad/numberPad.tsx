@@ -10,7 +10,7 @@ export interface NumberPadProps{
 }
 
 const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,removeAll}) => {
-  const numbers                         = [0,1,2,3,4,5,6,7,8,9];
+
   const firstNumbers                    = [1,2,3];
   const secondNumbers                   = [4,5,6];
   const thirdNumbers                    = [7,8,9];
@@ -19,7 +19,7 @@ const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,remove
   return (
     <View style={{ flex: 4}}>
       <View style={[styles.container, {
-        // Try setting `flexDirection` to `"row"`.
+
         flexDirection: "row"
       }]}>
           {
@@ -38,7 +38,7 @@ const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,remove
       </View>
       
       <View style={[styles.container, {
-        // Try setting `flexDirection` to `"row"`.
+
         flexDirection: "row"
       }]}>
         {
@@ -75,7 +75,6 @@ const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,remove
       </View>
 
       <View style={[styles.container, {
-        // Try setting `flexDirection` to `"row"`.
         flexDirection: "row"
       }]}>
           
