@@ -1,34 +1,29 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
+import { useStore } from "../store/store";
 
-export interface NumberPadProps{
-    clickMethod(arg:number) : void;
-    removeOne: () => void;
-    removeAll: () => void;
-    guess:any[];
-}
 
-const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,removeAll}) => {
+export interface NumberPadProps{}
 
+const NumberPad: React.FC<NumberPadProps> = ({}) => {
+  const {pinStore:{addDigit,removeAll, removeDigit}} = useStore();
   const firstNumbers                    = [1,2,3];
   const secondNumbers                   = [4,5,6];
   const thirdNumbers                    = [7,8,9];
 
-
   return (
     <View style={{ flex: 4}}>
       <View style={[styles.container, {
-
         flexDirection: "row"
       }]}>
           {
               firstNumbers.map( number => (
-                  
                   <Button
-                      onPress={() =>clickMethod(number)}
+                      onPress={() => addDigit(number)}
                       key={number}
-                      style={{ flex: 2}} 
+                      style={{ flex: 2}}
                   >
                   {number}
                   </Button>
@@ -38,46 +33,42 @@ const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,remove
       </View>
       
       <View style={[styles.container, {
-
         flexDirection: "row"
       }]}>
         {
-              secondNumbers.map( number => (
-                  
-                  <Button
-                      onPress={() =>clickMethod(number)}
-                      key={number}
-                      style={{ flex: 2}} 
-                  >
-                  {number}
-                  </Button>
-                
-              ))
-          }
+          secondNumbers.map( number => (
+              <Button
+                  onPress={() =>addDigit(number)}
+                  key={number}
+                  style={{ flex: 2}}
+              >
+              {number}
+              </Button>
+            
+          ))
+        }
       </View>
 
       <View style={[styles.container, {
         flexDirection: "row"
       }]}>
           {
-              thirdNumbers.map( number => (
-                  
-                  <Button
-                      onPress={() =>clickMethod(number)}
-                      key={number}
-                      style={{ flex: 2}} 
-                  >
-                  {number}
-                  </Button>
+            thirdNumbers.map( number => (
                 
-              ))
+                <Button
+                    onPress={() =>addDigit(number)}
+                    key={number}
+                    style={{ flex: 2}} 
+                >
+                {number}
+                </Button>
+            ))
           }
       </View>
 
       <View style={[styles.container, {
         flexDirection: "row"
       }]}>
-          
           <Button
               onPress={() => {removeAll()}}
               style={{ flex: 4}} 
@@ -85,13 +76,13 @@ const NumberPad: React.FC<NumberPadProps> = ({clickMethod,guess,removeOne,remove
           clear all
           </Button>
           <Button
-              onPress={() =>clickMethod(0)}
+              onPress={() =>addDigit(0)}
               style={{ flex: 2}} 
           >
           {0}
           </Button>
           <Button
-              onPress={() => {removeOne()}}
+              onPress={() => {removeDigit()}}
               style={{ flex: 4}} 
           >
           erase
@@ -114,4 +105,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NumberPad;
+export default observer(NumberPad);

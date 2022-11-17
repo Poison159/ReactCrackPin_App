@@ -1,3 +1,5 @@
+import React, {useState} from "react"
+
 export const CheckGuess = (guess:any,pin:any) => {
     let temp = [];
     let seen : any[] = [];
@@ -21,6 +23,22 @@ export const hasWon = (tempArray: any[]) => {
         winner = false
     }
     return winner;
+}
+
+
+export const getSnack = (secondsLeft:number,won:boolean) =>{
+  const [visible, setVisible]           = useState(false);
+  const onToggleSnackBar                = () => setVisible(!visible);
+  const [snackMsg,setSnackMsg]          = useState<string>("");
+
+  if(secondsLeft === 10){
+    onToggleSnackBar();
+    setSnackMsg("10 secnods lefft");
+  }
+  if(secondsLeft === 0 && !won){
+    onToggleSnackBar();
+    setSnackMsg("you could not carck the code in time");
+  }
 }
 
 export const getRandomPin = () =>{

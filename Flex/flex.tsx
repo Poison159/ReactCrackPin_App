@@ -1,25 +1,26 @@
 import React , { useEffect, useState }  from "react";
 import {StyleSheet, Text, View } from "react-native";
 import NumberPad from "../NumberPad/numberPad";
-import FloatingActionButton from "./FloatingActionButton";
 import GameStatus from "./GameStatus";
 import GuessAndTime from "./GuessAndTime";
 import SnackSecation from "./SnackSections";
-import {hasWon,getRandomPin,CheckGuess} from "../helper/helper"
+import {hasWon,getRandomPin,CheckGuess} from "../helper/helper";
+import {useStore} from "../store/store";
+import { Observer } from "mobx-react";
+
 
 
 const Flex = () => {
+  const {pinStore:{won,currGuess,setWon,removeAll}} = useStore();
+
   const [visible, setVisible]           = React.useState(false);
   const [attempts,setAttempts]          = useState<any[]>([]);
   const [timeToSpare,setTimeToSpare]    = useState<number>(0)
-  const [won,setWon]                    = useState<boolean>(false);
   const [secondsLeft,setSecondsLeft]    = useState<number>(60);
-  const [guess,setGuess]                = useState<any[]>([]);
   const [pin,setPin]                    = useState<number[]>([]);
   const onToggleSnackBar                = () => setVisible(!visible);
   const onDismissSnackBar               = () => setVisible(false);
   const [snackMsg,setSnackMsg]          = useState<string>("");
-
 
   useEffect(() => {
 
@@ -38,8 +39,8 @@ const Flex = () => {
 
       if(secondsLeft > 0){
         const timerId = setTimeout(() => {
-          if(guess.length === 4){
-            let temp = CheckGuess(guess,pin);
+          if(currGuess.length === 4){
+            let temp = CheckGuess(currGuess,pin);
             if(hasWon(temp)){
               onToggleSnackBar();
               setSnackMsg("you are a genius, you cracked the code");
@@ -47,7 +48,7 @@ const Flex = () => {
               setWon(true);
             }else{
               setAttempts([temp,...attempts]);
-              setGuess([]);
+              removeAll();
             }
           }
           setSecondsLeft(secondsLeft - 1);
@@ -56,22 +57,8 @@ const Flex = () => {
       }
   },[secondsLeft]);
 
-
-  const  addNumber = (numb:number)  =>{
-    if(guess.length < 4)
-      setGuess([...guess, numb]);
-  }
-
-  const removeOne = () =>{
-    guess.pop();
-  }
-
-  const removeAll = () =>{
-    setGuess([]);
-  }
-
   const reset = () => {
-    setGuess([]);
+    removeAll();
     setPin([]);
     setAttempts([]);
     setWon(false);
@@ -83,13 +70,17 @@ const Flex = () => {
       flexDirection: "column"
       }]}>
         
-        <GuessAndTime won={won} secondsLeft={secondsLeft} guess={guess} />
-        <GameStatus reset={reset} secondsLeft={secondsLeft}  attempts={attempts} won={won} timeToSpare={timeToSpare}/>
-        <NumberPad clickMethod={addNumber} removeOne={removeOne} removeAll={removeAll} guess={guess}/>
+        <GuessAndTime secondsLeft={secondsLeft}/>
+        <Observer>
+          {() =>
+            <GameStatus reset={reset} secondsLeft={secondsLeft}  attempts={attempts} timeToSpare={timeToSpare}/>
+          }
+        </Observer>
+        <NumberPad/>
         <SnackSecation visible={visible} onDismissSnackBar={onDismissSnackBar} snackMsg={snackMsg}/>
        
     </View>
-  )};
+  )}
 
 const styles = StyleSheet.create({
   container: {
