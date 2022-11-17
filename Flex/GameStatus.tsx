@@ -8,18 +8,16 @@ import { useStore } from "../store/store";
 
 interface GameStatusProps{
     reset():void,
-    attempts:any[],
-    timeToSpare:number
     secondsLeft:number
 }
 
-const GameStatus: React.FC<GameStatusProps> = ({reset,attempts,timeToSpare,secondsLeft}) => {
-  const {pinStore:{won}} = useStore();
+const GameStatus: React.FC<GameStatusProps> = ({reset,secondsLeft}) => {
+  const {pinStore:{won,attempts}} = useStore();
     return(
       <View style={{ flex: 5, backgroundColor: "white", height:"90%" }}>
         {
           won ? 
-            <WonCard timeToSpare={timeToSpare} reset={reset}/>
+            <WonCard  reset={reset}/>
           :
           <>
             {

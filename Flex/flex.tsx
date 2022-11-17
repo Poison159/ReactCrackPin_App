@@ -11,20 +11,18 @@ import { Observer } from "mobx-react";
 
 
 const Flex = () => {
-  const {pinStore:{won,currGuess,setWon,removeAll}} = useStore();
-
-  const [visible, setVisible]           = React.useState(false);
-  const [attempts,setAttempts]          = useState<any[]>([]);
-  const [timeToSpare,setTimeToSpare]    = useState<number>(0)
+  const {pinStore:{won,currGuess,setWon,removeAll,
+    attempts,setAttempts,setTimeToSpare,pin,setPin}} = useStore();
+    
   const [secondsLeft,setSecondsLeft]    = useState<number>(60);
-  const [pin,setPin]                    = useState<number[]>([]);
+  const [visible,setVisible]            = useState(false);
   const onToggleSnackBar                = () => setVisible(!visible);
   const onDismissSnackBar               = () => setVisible(false);
   const [snackMsg,setSnackMsg]          = useState<string>("");
 
   useEffect(() => {
 
-    if(pin.length === 0)
+    if(pin?.length === 0)
       setPin(getRandomPin());
     if(secondsLeft === 10){
       onToggleSnackBar();
@@ -73,7 +71,7 @@ const Flex = () => {
         <GuessAndTime secondsLeft={secondsLeft}/>
         <Observer>
           {() =>
-            <GameStatus reset={reset} secondsLeft={secondsLeft}  attempts={attempts} timeToSpare={timeToSpare}/>
+            <GameStatus reset={reset} secondsLeft={secondsLeft}/>
           }
         </Observer>
         <NumberPad/>

@@ -4,7 +4,12 @@ import {makeAutoObservable } from "mobx";
 class PinStore{ 
     currGuess:Array<number> = [];
     secondsLeft:number = 60;
+    visible: boolean = false;
+    pin: number[] = []
     won:boolean = false;
+    attempts: any[] = []
+    timeToSpare: number = 0
+    snackMsg: string = ""
 
     contructor(){
         makeAutoObservable(this)
@@ -20,6 +25,16 @@ class PinStore{
     removeAll = () =>{this.currGuess = [];}
 
     setWon = (val:boolean) =>{this.won = val;}
+
+    setPin = (val:number[]) => {this.pin = val;}
+
+    setSnackMsg = (val:string) => {this.snackMsg = val}
+
+    setAttempts = (val:any[]) =>{this.attempts = val;}
+
+    setVisible = (val:boolean) => {this.visible = val;}
+
+    setTimeToSpare = (val:number) => {this.timeToSpare = val}
 
     setSecondsLeft = (seconds:number)=>{this.secondsLeft = seconds;}
 
