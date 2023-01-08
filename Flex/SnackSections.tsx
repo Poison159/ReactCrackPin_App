@@ -12,6 +12,7 @@ const SnackSecation:React.FC<SnackSectionProps> = ({visible,onDismissSnackBar,sn
     return(
         <Snackbar
           visible={visible}
+          style={{width:"100%"}}
           duration={2000}
           onDismiss={onDismissSnackBar}
           action={{

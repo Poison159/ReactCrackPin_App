@@ -1,12 +1,13 @@
 import React from "react";
 import {Button, Card, Text } from "react-native-paper";
+import { useStore } from "../store/store";
 
 interface WonCardProps {
-    timeToSpare:number,
     reset(): void,
 }
 
-const WonCard: React.FC<WonCardProps> = ({reset,timeToSpare}) =>  {
+const WonCard: React.FC<WonCardProps> = ({reset}) =>  {
+    const {pinStore:{timeToSpare}} = useStore();
     return(
         <Card>
             <Card.Title style={{backgroundColor:"green"}} title="You Won" subtitle="You're a genius"></Card.Title>

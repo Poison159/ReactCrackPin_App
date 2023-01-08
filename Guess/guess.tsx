@@ -1,13 +1,15 @@
 
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { Card } from 'react-native-elements'
+import {useStore} from "../store/store";
 
 export interface GuessProps{
-    guess:any[];
 }
 
-const Guess : React.FC<GuessProps> = ({guess}) => {
+const Guess : React.FC<GuessProps> = ({}) => {
+    const {pinStore:{currGuess}} = useStore();
     
 return (
 
@@ -17,7 +19,7 @@ return (
             flexDirection: "row"
          }]}>
              {
-                guess.map(numb => (
+                currGuess.map(numb => (
                     <Card key={numb}>
                         <Text>{numb}</Text>
                     </Card>
