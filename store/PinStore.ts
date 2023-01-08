@@ -40,7 +40,6 @@ class PinStore{
 
     removeOneSecond = () => { this.secondsLeft = this.secondsLeft - 1;}
 
-
 }
 
 export default PinStore;

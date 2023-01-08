@@ -1,12 +1,11 @@
 import React , { useEffect, useState }  from "react";
-import {StyleSheet, Text, View } from "react-native";
+import {StyleSheet, View } from "react-native";
 import NumberPad from "../NumberPad/numberPad";
 import GameStatus from "./GameStatus";
 import GuessAndTime from "./GuessAndTime";
 import SnackSecation from "./SnackSections";
 import {hasWon,getRandomPin,CheckGuess} from "../helper/helper";
 import {useStore} from "../store/store";
-import { Observer } from "mobx-react";
 import WonCard from "./WonCard";
 import LostCard from "./LostCard";
 
@@ -27,10 +26,10 @@ const Flex = () => {
     
   const [secondsLeft,setSecondsLeft]    = useState<number>(60);
   const [visible,setVisible]            = useState(false);
+  const [snackMsg,setSnackMsg]          = useState<string>("");
   const onToggleSnackBar                = () => setVisible(!visible);
   const onDismissSnackBar               = () => setVisible(false);
-  const [snackMsg,setSnackMsg]          = useState<string>("");
-
+  
   useEffect(() => {
 
     if(pin?.length === 0)
