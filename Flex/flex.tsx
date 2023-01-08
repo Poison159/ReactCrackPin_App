@@ -7,12 +7,23 @@ import SnackSecation from "./SnackSections";
 import {hasWon,getRandomPin,CheckGuess} from "../helper/helper";
 import {useStore} from "../store/store";
 import { Observer } from "mobx-react";
-
-
+import WonCard from "./WonCard";
+import LostCard from "./LostCard";
 
 const Flex = () => {
-  const {pinStore:{won,currGuess,setWon,removeAll,
-    attempts,setAttempts,setTimeToSpare,pin,setPin}} = useStore();
+  const {
+    pinStore:{
+      won,
+      currGuess,
+      attempts,
+      pin,
+      setWon,
+      removeAll,
+      setAttempts,
+      setTimeToSpare,
+      setPin
+    }
+  } = useStore();
     
   const [secondsLeft,setSecondsLeft]    = useState<number>(60);
   const [visible,setVisible]            = useState(false);
@@ -61,22 +72,23 @@ const Flex = () => {
     setAttempts([]);
     setWon(false);
     setSecondsLeft(60);
-  }
+  } 
 
   return (
-    <View style={[styles.container, {
-      flexDirection: "column"
-      }]}>
+    <View style={[styles.container, {flexDirection: "column"}]}>
+
+        { secondsLeft > 0 && !won && <GuessAndTime secondsLeft={secondsLeft}/> }
+
+        { won && <WonCard  reset={reset}/> }
+
+        { secondsLeft > 0 && !won  && <GameStatus/>}
         
-        <GuessAndTime secondsLeft={secondsLeft}/>
-        <Observer>
-          {() =>
-            <GameStatus reset={reset} secondsLeft={secondsLeft}/>
-          }
-        </Observer>
-        <NumberPad/>
+        { secondsLeft > 0 && !won && <NumberPad/> }
+
+        { secondsLeft == 0 && !won && <LostCard reset={reset} />}
+
         <SnackSecation visible={visible} onDismissSnackBar={onDismissSnackBar} snackMsg={snackMsg}/>
-       
+
     </View>
   )}
 

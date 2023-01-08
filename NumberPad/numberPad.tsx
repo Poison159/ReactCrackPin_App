@@ -14,7 +14,7 @@ const NumberPad: React.FC<NumberPadProps> = ({}) => {
   const thirdNumbers                    = [7,8,9];
 
   return (
-    <View style={{ flex: 4}}>
+    <View style={{ flex: 2}}>
       <View style={[styles.container, {
         flexDirection: "row"
       }]}>

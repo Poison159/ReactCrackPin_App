@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import LostCard from "./LostCard";
 import WonCard from "./WonCard";
@@ -6,35 +6,20 @@ import Attempt from "../Attempts/attempt";
 import { useStore } from "../store/store";
 
 
-interface GameStatusProps{
-    reset():void,
-    secondsLeft:number
-}
-
-const GameStatus: React.FC<GameStatusProps> = ({reset,secondsLeft}) => {
-  const {pinStore:{won,attempts}} = useStore();
-    return(
-      <View style={{ flex: 5, backgroundColor: "white", height:"90%" }}>
-        {
-          won ? 
-            <WonCard  reset={reset}/>
-          :
+const GameStatus: React.FC<any> = () => {
+  const { pinStore: { won, attempts } } = useStore();
+  return (
+    <View style={{ flex: 1.5, backgroundColor: "white" }}>
+      {
           <>
-            {
-              secondsLeft > 0 ?
-              <>
-                <Text style={{textAlign: "center"}}>Previous Attempts</Text>
-                <ScrollView style={{height:100}}>
-                  <Attempt attempts={attempts}/>
-                </ScrollView>
-              </>
-              :
-                <LostCard reset={reset}/>
-            }
+            <Text style={{ textAlign: "center" }}>Previous Attempts</Text>
+            <ScrollView style={{ height: 100 }}>
+              <Attempt attempts={attempts} />
+            </ScrollView>
           </>
-        }
-      </View>
-    );
+      }
+    </View>
+  );
 }
 
 export default GameStatus;
