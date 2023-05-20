@@ -6,12 +6,10 @@ interface WonCardProps {
     reset(): void,
 }
 
-
-
 const WonCard: React.FC<WonCardProps> = ({ reset }) => {
     const { pinStore: { timeToSpare } } = useStore();
     const [funFact, setFunFacts] = useState([]);
-
+    const subtitle = "Won with " + timeToSpare + "to spare";
     useEffect(() => {
         const fetchFact = async () => {
             try {
@@ -33,14 +31,13 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
 
     return (
         <Card>
-            <Card.Title style={{ backgroundColor: "green" }} title="You Won" subtitle="You're a genius"></Card.Title>
+            <Card.Title style={{ backgroundColor: "green" }} title="You Won" subtitle={subtitle}></Card.Title>
             <Card.Cover source={require('../assets/d59c9002030448f1193adf7d7600a52a.png')} />
-            <Text style={{ textAlign: 'center' }}>With {timeToSpare} seconds to spare!</Text>
-            <Text></Text>
+            <Text style={{ textAlign: 'center' }}></Text>
             {
                 funFact.map((ff:any) => (
                     <Card>
-                        <Text style={{fontWeight:"bold"}}>{ff.joke}</Text>
+                        <Text style={{fontWeight:"bold",textAlign:"center"}}>{ff.joke}</Text>
                     </Card>
                    
                 ))

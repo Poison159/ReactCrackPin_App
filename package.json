@@ -10,7 +10,7 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "expo": "~42.0.1",
-    "expo-cli": "^6.0.6",
+    "expo-cli": "^6.3.7",
     "expo-status-bar": "~1.0.4",
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
