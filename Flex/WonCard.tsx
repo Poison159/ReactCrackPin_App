@@ -39,7 +39,6 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
                     <Card>
                         <Text style={{fontWeight:"bold",textAlign:"center"}}>{ff.joke}</Text>
                     </Card>
-                   
                 ))
             }
             <Card.Actions>

@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import Flex from './Flex/Flex';
+import Flex from './Flex/flex';
+import RegistrationForm from './LoginRegister/Register';
 
 export default function App() {
+  const [loggedIn,setLoggedIn] = useState(false);
   return (
     <>
     <Appbar style={{marginTop:35}}>
@@ -15,7 +17,9 @@ export default function App() {
         </Text>
     </Appbar>
     <View style={styles.container}>
-      <Flex/>
+      {
+        !loggedIn ? <RegistrationForm setLoggedIn={setLoggedIn}/> : <Flex/>
+      }
       <StatusBar style="auto" />
     </View>
     </>
