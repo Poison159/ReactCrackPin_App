@@ -36,8 +36,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ setLoggedIn }) => {
             'Content-Type': 'application/json'
           }}
         );
-
-      console.log('Token:', response.data);
       setLoggedIn(true);
 
     } catch (error) {

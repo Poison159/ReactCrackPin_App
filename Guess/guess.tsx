@@ -12,15 +12,13 @@ const Guess : React.FC<GuessProps> = ({}) => {
     const {pinStore:{currGuess}} = useStore();
     
 return (
-
     <>
-        
         <View style={[styles.container, {
             flexDirection: "row"
          }]}>
              {
-                currGuess.map(numb => (
-                    <Card key={numb}>
+                currGuess.map((numb,index) => (
+                    <Card key={index}>
                         <Text>{numb}</Text>
                     </Card>
                 ))      

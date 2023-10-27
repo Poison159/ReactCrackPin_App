@@ -8,7 +8,7 @@ const FloatingActionButton:React.FC<any> = () => {
     return(
         <View style={{flex:1, backgroundColor: '#f3f3f3'}}>
         <ActionButton buttonColor="rgba(231,76,60,1)">
-          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => {}}>
             <Icon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>

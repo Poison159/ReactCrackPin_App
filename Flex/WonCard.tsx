@@ -9,7 +9,7 @@ interface WonCardProps {
 const WonCard: React.FC<WonCardProps> = ({ reset }) => {
     const { pinStore: { timeToSpare } } = useStore();
     const [funFact, setFunFacts] = useState([]);
-    const subtitle = "Won with " + timeToSpare + "to spare";
+    const subtitle = "Won with " + timeToSpare + " seconds to spare";
     useEffect(() => {
         const fetchFact = async () => {
             try {
@@ -20,10 +20,8 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
                         }
                     });
                 const Jsonres = await res.json();
-                console.log(Jsonres);
                 setFunFacts(Jsonres);
             } catch (err: any) {
-                console.log(err.message);
             }
         }
         fetchFact();
@@ -35,8 +33,8 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
             <Card.Cover source={require('../assets/d59c9002030448f1193adf7d7600a52a.png')} />
             <Text style={{ textAlign: 'center' }}></Text>
             {
-                funFact.map((ff:any) => (
-                    <Card>
+                funFact.map((ff:any,index:number) => (
+                    <Card key={index}>
                         <Text style={{fontWeight:"bold",textAlign:"center"}}>{ff.joke}</Text>
                     </Card>
                 ))

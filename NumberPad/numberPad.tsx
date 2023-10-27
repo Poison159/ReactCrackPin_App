@@ -19,10 +19,10 @@ const NumberPad: React.FC<NumberPadProps> = ({}) => {
         flexDirection: "row"
       }]}>
           {
-              firstNumbers.map( number => (
+              firstNumbers.map( (number,index:number) => (
                   <Button
                       onPress={() => addDigit(number)}
-                      key={number}
+                      key={index}
                       style={{ flex: 2}}
                   >
                   {number}
@@ -36,10 +36,10 @@ const NumberPad: React.FC<NumberPadProps> = ({}) => {
         flexDirection: "row"
       }]}>
         {
-          secondNumbers.map( number => (
+          secondNumbers.map( (number,index) => (
               <Button
                   onPress={() =>addDigit(number)}
-                  key={number}
+                  key={index}
                   style={{ flex: 2}}
               >
               {number}
@@ -53,11 +53,11 @@ const NumberPad: React.FC<NumberPadProps> = ({}) => {
         flexDirection: "row"
       }]}>
           {
-            thirdNumbers.map( number => (
+            thirdNumbers.map( (number,index:number) => (
                 
                 <Button
                     onPress={() =>addDigit(number)}
-                    key={number}
+                    key={index}
                     style={{ flex: 2}} 
                 >
                 {number}

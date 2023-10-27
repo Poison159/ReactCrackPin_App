@@ -17,9 +17,7 @@ export default function App() {
         </Text>
     </Appbar>
     <View style={styles.container}>
-      {
-        !loggedIn ? <RegistrationForm setLoggedIn={setLoggedIn}/> : <Flex/>
-      }
+        <Flex/>
       <StatusBar style="auto" />
     </View>
     </>

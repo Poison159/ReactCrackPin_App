@@ -4,10 +4,10 @@ import NumberPad from "../NumberPad/numberPad";
 import GameStatus from "./GameStatus";
 import GuessAndTime from "./GuessAndTime";
 import SnackSecation from "./SnackSections";
-import {hasWon,getRandomPin,CheckGuess} from "../Helper/helper";
 import {useStore} from "../store/store";
 import WonCard from "./WonCard";
 import LostCard from "./LostCard";
+import { CheckGuess, getRandomPin, hasWon } from "../helper/helper";
 
 const Flex = () => {
   const {
