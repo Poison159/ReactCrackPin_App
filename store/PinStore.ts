@@ -18,7 +18,6 @@ class PinStore {
   won: boolean = false;
   attempts: any[] = [];
   timeToSpare: number = 0;
-  snackMsg: string = "";
   bestTimes: BestTime[] = [];
   isTop3Win: boolean = false;
   lastWinId: string = "";
@@ -70,8 +69,6 @@ class PinStore {
   setWon = (val: boolean) => { this.won = val; }
 
   setPin = (val: number[]) => { this.pin = val; }
-
-  setSnackMsg = (val: string) => { this.snackMsg = val }
 
   setAttempts = (val: any[]) => { this.attempts = val; }
 

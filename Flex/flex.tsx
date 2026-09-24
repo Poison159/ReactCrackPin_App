@@ -5,7 +5,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import NumberPad from "../NumberPad/numberPad";
 import GameStatus from "./GameStatus";
 import GuessAndTime from "./GuessAndTime";
-import SnackSecation from "./SnackSections";
 import {useStore} from "../store/store";
 import WonCard from "./WonCard";
 import LostCard from "./LostCard";
@@ -30,23 +29,11 @@ const Flex = () => {
 
   const insets = useSafeAreaInsets();
   const [secondsLeft,setSecondsLeft]    = useState<number>(60);
-  const [visible,setVisible]            = useState(false);
-  const [snackMsg,setSnackMsg]          = useState<string>("");
-  const onToggleSnackBar                = () => setVisible(!visible);
-  const onDismissSnackBar               = () => setVisible(false);
   
   useEffect(() => {
 
     if(pin?.length === 0)
       setPin(getRandomPin());
-    if(secondsLeft === 10){
-      onToggleSnackBar();
-      setSnackMsg("10 secnods lefft");
-    }
-    if(secondsLeft === 0 && !won){
-      onToggleSnackBar();
-      setSnackMsg("you could not carck the code in time");
-    }
     if(won)
       setSecondsLeft(0);
 
@@ -55,8 +42,6 @@ const Flex = () => {
           if(currGuess.length === 4){
             let temp = CheckGuess(currGuess,pin);
             if(hasWon(temp)){
-              onToggleSnackBar();
-              setSnackMsg("you are a genius, you cracked the code");
               setTimeToSpare(secondsLeft);
               recordWin(secondsLeft);
               setWon(true);
@@ -100,9 +85,7 @@ const Flex = () => {
         
         { secondsLeft > 0 && !won && <NumberPad/> }
 
-        { secondsLeft == 0 && !won && <LostCard reset={reset} />}
-
-        <SnackSecation visible={visible} onDismissSnackBar={onDismissSnackBar} snackMsg={snackMsg}/>
+        { secondsLeft == 0 && !won && <LostCard reset={reset} /> }
 
     </View>
   )}
