@@ -1,23 +1,69 @@
-import { observer } from "mobx-react-lite";
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, StyleSheet, Text, View } from "react-native";
 import Guess from "../Guess/guess";
-import { useStore } from "../store/store";
 
-
-interface GuesAndTimeProps {
-  secondsLeft: number
+interface GuessAndTimeProps {
+  secondsLeft: number;
 }
 
-const GuessAndTime: React.FC<GuesAndTimeProps> = ({ secondsLeft }) => {
-  const { pinStore: { won } } = useStore();
+const GuessAndTime: React.FC<GuessAndTimeProps> = ({ secondsLeft }) => {
+  const isLow = secondsLeft <= 10;
+  const pulse = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (isLow) {
+      const loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulse, { toValue: 1.25, duration: 400, useNativeDriver: true }),
+          Animated.timing(pulse, { toValue: 1, duration: 400, useNativeDriver: true }),
+        ])
+      );
+      loop.start();
+      return () => loop.stop();
+    }
+  }, [isLow, pulse]);
+
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={styles.container}>
       <Guess />
-      <Text></Text>
-      <Text style={{ textAlign: "center" }}> Time remaining : {secondsLeft}</Text>
+      <View style={styles.timerRow}>
+        <Text style={styles.timerLabel}>Time remaining</Text>
+        <Animated.Text
+          style={[styles.timerValue, isLow && styles.timerLow, { transform: [{ scale: pulse }] }]}
+        >
+          {secondsLeft}s
+        </Animated.Text>
+      </View>
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  timerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 8,
+    gap: 8,
+  },
+  timerLabel: {
+    fontSize: 14,
+    color: "#8a8a9a",
+  },
+  timerValue: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#6750a4",
+    minWidth: 40,
+    textAlign: "center",
+  },
+  timerLow: {
+    color: "#ff3b30",
+  },
+});
 
 export default GuessAndTime;

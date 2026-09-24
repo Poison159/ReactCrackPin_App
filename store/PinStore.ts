@@ -1,45 +1,87 @@
-import {makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export interface BestTime {
+  id: string;
+  timeToSpare: number;
+  date: string;
+}
 
-class PinStore{ 
-    currGuess:Array<number> = [];
-    secondsLeft:number = 60;
-    visible: boolean = false;
-    pin: number[] = []
-    won:boolean = false;
-    attempts: any[] = []
-    timeToSpare: number = 0
-    snackMsg: string = ""
+const STORAGE_KEY = "crackpin:bestTimes";
+const MAX_RECORDS = 3;
 
-    contructor(){
-        makeAutoObservable(this)
-    }
+class PinStore {
+  currGuess: Array<number> = [];
+  secondsLeft: number = 60;
+  visible: boolean = false;
+  pin: number[] = [];
+  won: boolean = false;
+  attempts: any[] = [];
+  timeToSpare: number = 0;
+  snackMsg: string = "";
+  bestTimes: BestTime[] = [];
+  isTop3Win: boolean = false;
+  lastWinId: string = "";
 
-    addDigit = (digit:number) =>{
-        if(this.currGuess.length < 4)
-            this.currGuess.push(digit);
-    }
+  constructor() {
+    makeAutoObservable(this);
+    this.loadBestTimes();
+  }
 
-    removeDigit = () =>{this.currGuess.pop();}
+  recordWin = (timeToSpare: number) => {
+    const entry: BestTime = {
+      id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+      timeToSpare,
+      date: new Date().toISOString(),
+    };
 
-    removeAll = () =>{this.currGuess = [];}
+    const next = [...this.bestTimes, entry]
+      .sort((a, b) => b.timeToSpare - a.timeToSpare)
+      .slice(0, MAX_RECORDS);
 
-    setWon = (val:boolean) =>{this.won = val;}
+    this.isTop3Win = next.some((item) => item.id === entry.id);
+    this.lastWinId = entry.id;
+    this.bestTimes = next;
 
-    setPin = (val:number[]) => {this.pin = val;}
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(this.bestTimes)).catch(() => {});
+  };
 
-    setSnackMsg = (val:string) => {this.snackMsg = val}
+  private loadBestTimes = async () => {
+    try {
+      const raw = await AsyncStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          this.bestTimes = parsed;
+        }
+      }
+    } catch (e) {}
+  };
 
-    setAttempts = (val:any[]) =>{this.attempts = val;}
+  addDigit = (digit: number) => {
+    if (this.currGuess.length < 4)
+      this.currGuess.push(digit);
+  }
 
-    setVisible = (val:boolean) => {this.visible = val;}
+  removeDigit = () => { this.currGuess.pop(); }
 
-    setTimeToSpare = (val:number) => {this.timeToSpare = val}
+  removeAll = () => { this.currGuess = []; }
 
-    setSecondsLeft = (seconds:number)=>{this.secondsLeft = seconds;}
+  setWon = (val: boolean) => { this.won = val; }
 
-    removeOneSecond = () => { this.secondsLeft = this.secondsLeft - 1;}
+  setPin = (val: number[]) => { this.pin = val; }
 
+  setSnackMsg = (val: string) => { this.snackMsg = val }
+
+  setAttempts = (val: any[]) => { this.attempts = val; }
+
+  setVisible = (val: boolean) => { this.visible = val; }
+
+  setTimeToSpare = (val: number) => { this.timeToSpare = val }
+
+  setSecondsLeft = (seconds: number) => { this.secondsLeft = seconds; }
+
+  removeOneSecond = () => { this.secondsLeft = this.secondsLeft - 1; }
 }
 
 export default PinStore;

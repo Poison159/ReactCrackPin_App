@@ -1,26 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
 import Flex from './Flex/flex';
-import RegistrationForm from './LoginRegister/Register';
 
 export default function App() {
-  const [loggedIn,setLoggedIn] = useState(false);
   return (
-    <>
-    <Appbar style={{marginTop:35}}>
-        <Text 
-          style={{fontSize:24,fontWeight:"bold",textAlign:"center"}}
-        >
-          Crackpin
-        </Text>
-    </Appbar>
-    <View style={styles.container}>
-        <Flex/>
-      <StatusBar style="auto" />
-    </View>
-    </>
+    <PaperProvider>
+      <View style={styles.container}>
+        <Flex />
+        <StatusBar style="auto" />
+      </View>
+    </PaperProvider>
   );
 }
 
@@ -28,7 +19,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
