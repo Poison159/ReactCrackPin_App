@@ -80,7 +80,7 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
   useEffect(() => {
     const fetchFact = async () => {
       try {
-        const res = await fetch("https://api.api-ninjas.com/v1/jokes?limit=1", {
+        const res = await fetch("https://api.api-ninjas.com/v1/jokes", {
           headers: {
             "X-Api-Key": "OrtxEzlVaDcKBYmzDt9yDg==XLK8RkA16JXR2v2u",
           },
@@ -128,22 +128,6 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
             </Animated.View>
           )}
 
-          <View style={styles.bestSection}>
-            <Text style={styles.bestTitle}>Best Times</Text>
-            {bestTimes.length === 0 ? (
-              <Text style={styles.bestEmpty}>No wins recorded yet</Text>
-            ) : (
-              bestTimes.map((record: BestTime, i: number) => (
-                <RankRow
-                  key={record.id}
-                  record={record}
-                  rank={i}
-                  isCurrent={record.id === lastWinId}
-                />
-              ))
-            )}
-          </View>
-
           {Array.isArray(funFact) && funFact.length > 0 && (
             <View style={styles.factBox}>
               <View style={styles.factAccent} />
@@ -161,6 +145,22 @@ const WonCard: React.FC<WonCardProps> = ({ reset }) => {
             >
               Play again
             </Button>
+          </View>
+
+          <View style={styles.bestSection}>
+            <Text style={styles.bestTitle}>Best Times</Text>
+            {bestTimes.length === 0 ? (
+              <Text style={styles.bestEmpty}>No wins recorded yet</Text>
+            ) : (
+              bestTimes.map((record: BestTime, i: number) => (
+                <RankRow
+                  key={record.id}
+                  record={record}
+                  rank={i}
+                  isCurrent={record.id === lastWinId}
+                />
+              ))
+            )}
           </View>
         </Card>
       </Animated.View>
